@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap');
+
+:root {
+  --fondo: #2a2823;
+  --papel: #f2f2ee;
+  --tinta: #1d1d1b;
+  --tinta-suave: #6b6a63;
+  --linea: #b9b8ae;
+  --alerta: #b3361f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 40px 16px;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: 'Courier Prime', monospace;
+}
+
+/* El ticket: el contenedor donde React dibuja toda la app */
+#root {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 32px 28px 36px;
+  background: var(--papel);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+  text-align: left;
+}
+
+h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 28px 0 10px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--linea);
+  color: var(--tinta-suave);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+p {
+  margin: 10px 0 6px;
+  font-size: 14px;
+}
+
+ul {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 5px 0;
+  font-size: 15px;
+}
+
+input:not([type='checkbox']) {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--linea);
+  border-radius: 2px;
+  background: #fff;
+  color: var(--tinta);
+  font: inherit;
+}
+
+input[type='checkbox'] {
+  accent-color: var(--tinta);
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 14px 8px 0;
+  font-size: 14px;
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 2px;
+  background: var(--tinta);
+  color: var(--papel);
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3a3a37;
+}
+
+/* Los botones "Borrar" dentro de las listas: discretos */
+li button {
+  padding: 0;
+  background: none;
+  color: var(--alerta);
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+li button:hover {
+  background: none;
+  color: var(--tinta);
+}
+
+/* "Total de la cuenta": el párrafo que viene justo después del ul del resumen */
+h2 + ul + p {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 2px solid var(--tinta);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+/* "Sin asignar": el párrafo siguiente, que solo aparece cuando hay plata sin repartir */
+h2 + ul + p + p {
+  color: var(--alerta);
+  font-weight: 700;
+}
