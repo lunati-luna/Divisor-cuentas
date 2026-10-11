@@ -1,75 +1,70 @@
-# React + TypeScript + Vite
+# Divisor de cuentas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+App web para repartir la cuenta de una comida entre varias personas, incluso cuando no todos consumieron lo mismo. Una pizza se divide entre todos, pero la bebida que pidió uno solo la paga solo esa persona.
 
-Currently, two official plugins are available:
+![Captura de la app](docs/captura.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Qué hace
 
-## React Compiler
+- Cargás las personas de la mesa.
+- Cargás cada item con su precio y marcás quiénes lo consumieron. El precio se reparte en partes iguales entre esas personas.
+- Ves en tiempo real cuánto paga cada uno y el total de la cuenta.
+- Si borrás a una persona, se la saca también de los items en los que figuraba, y los totales se recalculan solos.
+- Si un item queda sin consumidores, la app muestra cuánto dinero quedó **sin asignar**, para que la cuenta nunca "pierda" plata en silencio.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Ejemplo
 
-## Expanding the ESLint configuration
+| Item    | Precio | Consumieron     |
+| ------- | -----: | -------------   |
+| Pizza   | $20000 | Ana, Beto, Caro |
+| Agua    | $10000 | Ana, Beto       |
+| Birra   | $6000  | Ana             |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Persona | Paga       |
+| ------- | ---------: |
+| Ana     | $17666.67  |
+| Beto    | $11666.67  |
+| Caro    | $6666.67   |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Los montos se muestran con dos decimales, así que la suma de los totales individuales puede diferir en un centavo del total de la cuenta por redondeo.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tecnologías
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- [React](https://react.dev/) con [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/) como herramienta de desarrollo
+- ESLint para el análisis del código
+- CSS plano, sin librerías de estilos
 
+## Cómo correrlo
+
+Necesitás tener [Node.js](https://nodejs.org/) instalado.
+
+```bash
+git clone https://github.com/lunati-luna/Divisor-cuentas.git
+cd Divisor-cuentas
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Después abrí `http://localhost:5173` en el navegador.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Estructura
 
 ```
+src/
+├── App.tsx             # Estado principal (personas e items) y composición de la pantalla
+├── FormularioItem.tsx  # Formulario para cargar un item y elegir quiénes lo consumieron
+├── Resumen.tsx         # Muestra cuánto paga cada uno, el total y lo sin asignar
+├── calculos.ts         # Función que reparte cada item entre sus consumidores
+└── types.ts            # Tipos Persona e Item
+```
+
+## Notas
+
+Los datos viven solo mientras la pestaña está abierta: no se guardan entre sesiones.
+
+## Posibles mejoras
+
+- Editar un item sin tener que borrarlo y volver a cargarlo.
+- Sumar propina y repartirla en proporción a lo que consumió cada uno.
+- Botón para copiar el resumen y mandarlo por WhatsApp.
